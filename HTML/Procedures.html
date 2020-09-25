@@ -1,0 +1,26 @@
+DELIMITER $$
+CREATE PROCEDURE FetchAllStudents()
+BEGIN
+SELECT *  FROM myDB.students;
+END $$
+DELIMITER ;
+
+
+/* Recursive*/
+
+
+DELIMITER $$ 			 /* Set a new delimiter => $$ */
+CREATE PROCEDURE calctotal(	/* Create the procedure */
+    IN number INT,			/* Set Input and Ouput variables */
+    OUT total INT
+) BEGIN
+DECLARE score INT DEFAULT NULL; 	 /* Set the default value => "score" */
+SELECT awards FROM achievements 	 /* Update "score" via SELECT query */
+WHERE id = number INTO score;
+IF score IS NULL THEN SET total = 0; 	 /* Termination condition */
+ELSE
+CALL calctotal(number+1); 	 /* Recursive call */
+SET total = total + score; 	 /* Action after recursion */
+END IF;
+END $$ 			 /* End of procedure */
+DELIMITER ; 			 /* Reset the delimiter */

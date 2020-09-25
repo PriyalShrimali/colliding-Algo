@@ -1,0 +1,14 @@
+DECLARE @name VARCHAR(50) 	 /* Declare All Required Variables */
+
+DECLARE db_cursor CURSOR FOR 	 /* Declare Cursor Name*/
+SELECT name
+FROM myDB.students
+WHERE parent_name IN ('Sara', 'Ansh')
+
+OPEN db_cursor 	 /* Open cursor and Fetch data into @name */ 
+FETCH next
+FROM db_cursor
+INTO @name
+
+CLOSE db_cursor 	 /* Close the cursor and deallocate the resources */
+DEALLOCATE db_cursor
